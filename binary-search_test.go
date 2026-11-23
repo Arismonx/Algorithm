@@ -39,7 +39,7 @@ func TestBinarySearch(t *testing.T) {
 		{
 			name:     "ไม่เจอ",
 			d:        []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-			x:        10,
+			x:        11,
 			left:     0,
 			right:    9,
 			expected: -1,
@@ -53,5 +53,17 @@ func TestBinarySearch(t *testing.T) {
 				t.Errorf("BinarySearch() ผลลัพธ์ได้ %d แต่คาดหวังไว้ %d", ans, tt.expected)
 			}
 		})
+	}
+}
+
+// Run `go test -bench=. -benchmem`
+func BenchmarkBinarySearch(b *testing.B) {
+	arr := make([]int, 1_000_000)
+	for i := range arr {
+		arr[i] = i
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		BinarySearch(arr, 999_999, 0, 999_999)
 	}
 }
